@@ -15,6 +15,10 @@ password:{
     type :String,
     required :true
 },
+ProfilePic :{
+    type : String,
+    default :"https://example.com/default-profile.jpg"
+},
 role :{
     type :String,
     eunm :['System admin','Standard user', 'Organizer'],
