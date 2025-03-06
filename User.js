@@ -20,6 +20,9 @@ role :{
     eunm :['System admin','Standard user', 'Organizer'],
     default : 'Standard user'
 },
+profilePicture:{
+    type :String
+},
 createdAt :{
     type: Date,
     default : ()=> Date.now()
