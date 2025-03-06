@@ -1,0 +1,26 @@
+{
+  "name": "software-project",
+  "version": "1.0.0",
+  "description": "This is the main repo of the software project spring semester for 2025 German International University",
+  "main": "Event.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/H-1000/software-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/H-1000/software-Project/issues"
+  },
+  "homepage": "https://github.com/H-1000/software-Project#readme",
+  "dependencies": {
+    "mongoose": "^8.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
