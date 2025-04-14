@@ -21,7 +21,7 @@ ProfilePic :{
 },
 role :{
     type :String,
-    eunm :['System admin','Standard user', 'Organizer'],
+    eunm :['admin','Standard user', 'Organizer'],
     default : 'Standard user'
 },
 createdAt :{
