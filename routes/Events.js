@@ -1,39 +1,21 @@
 const express =require('express');
 const router = express.Router();
+const eventController = require('../Controllers/eventController');
+const authMiddleware = require('../Middleware/authMiddleware');
 
 
+router.get('/', eventController.getAllEvents); // Get all events
+router.get('/my-events', authMiddleware.authenticateUser, eventController.getEventsByOrganizer); // Get events created by the authenticated user
+router.get('/:id', eventController.getEventById); // Get event by ID
 
-router.get('/', (req, res) => {
-    res.send("Events List")
 
-})
+router.post('/', authMiddleware.authenticateUser,authMiddleware.authorizeRoles('organizer') ,eventController.createEvent); // Create a new event
 
-router.get('/new', (req, res) => {
-    res.send("create a new Event")
-})
+router.put('/:id',authMiddleware.authenticateUser,authMiddleware.authorizeRoles('organizer','admin') ,eventController.updateEvent);//update the event by user or admin
 
-router.post('/', (req, res) => { 
+router.delete('/:id', authMiddleware.authenticateUser,authMiddleware.authorizeRoles('organizer','admin') ,eventController.deleteEvent); // Delete an event by ID
 
-    res.send("create a new Event") //admin user can create a new event
+router.patch('/:id/status', authMiddleware.authenticateUser,authMiddleware.authorizeRoles('admin') ,eventController.updateEventStatus); // Update event status by admin
 
-})
-
-router
- .route('/:id')
-    .get((req, res) => { 
-    res.send(`Event details for event with id ${req.params.id}`)
-    }) 
-    .put((req, res) => { 
-        res.send(`Update Event for event with id ${req.params.id}`)
-    })
-    .delete((req, res) => { 
-        res.send(`Delete Event for event with id ${req.params.id}`)
-    })
-
-router.param('id', (req,res,next,id) =>{
-    next(); //this middleware function is called before the route handler
-})
-
-//hello
 
 module.exports=router; 
