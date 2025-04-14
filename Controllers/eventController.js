@@ -80,7 +80,7 @@ const eventController = {
         }
     },    
 
-    deletEvent : async (req, res) => {
+    deleteEvent : async (req, res) => {
 
         try{
         const eventId=req.params.id;
