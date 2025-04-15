@@ -155,6 +155,34 @@ const eventController = {
             res.status(500).json({ message: 'Server error' });
         }
     },
+    getEventAnalytics: async (req, res) => {
+        try {
+          const organizerId = req.user.userId;
+    
+          // Fetch events created by this organizer
+          const events = await Event.find({ organizer: organizerId });
+    
+          const analytics = events.map(event => {
+            const bookedTickets = event.totalTickets - event.remainingTickets;
+            const percentageBooked = ((bookedTickets / event.totalTickets) * 100).toFixed(2);
+    
+            return {
+              eventId: event._id,
+              title: event.title,
+              bookedTickets,
+              totalTickets: event.totalTickets,
+              remainingTickets: event.remainingTickets,
+              percentageBooked: Number(percentageBooked)
+            };
+          });
+    
+          return res.status(200).json({ analytics });
+        } catch (error) {
+          console.error("Error getting event analytics:", error);
+          res.status(500).json({ message: "Server error while fetching analytics" });
+        }
+      },
+
 
 };
 
