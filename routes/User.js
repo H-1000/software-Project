@@ -1,8 +1,8 @@
-const express = requrie('express')
-const userController = requrie("../Controllers/user.controller")
-const authorizationMiddleware = requrie('../Middleware/authorizationMiddleware')
-const eventController =requrie('../Controllers/eventController')
-const bookingController = requrie('../Controllers/bookingController')
+const express = require('express')
+const userController = require("../Controllers/user.controller")
+const authorizationMiddleware = require('../Middleware/authorizationMiddleware')
+const eventController =require('../Controllers/eventController')
+const bookingController = require('../Controllers/bookingController')
 const router = express.Router()
 
 
