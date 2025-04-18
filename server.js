@@ -1,8 +1,9 @@
 const express = require('express');
-
+require('dotenv').config();
 const mongoose = require('mongoose'); 
-const mongoUrl='mongodb+srv://adminHamid:Test123@cluster0.nr1om.mongodb.net/event-booking?retryWrites=true&w=majority&appName=Cluster07'
+const mongoURI='mongodb+srv://adminHamid:Test123@cluster0.nr1om.mongodb.net/event-booking?retryWrites=true&w=majority&appName=Cluster07'
 
+console.log('hello')
 mongoose.connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -23,7 +24,14 @@ app.get('/', (req, res) => {
 
 
 const eventRouter = require('./routes/Events'); //importing the events router
+app.use('/events', eventRouter); 
+const bookingRouter = require('./routes/booking'); //importing the booking router
+app.use('/booking', bookingRouter); 
+const userRouter = require('./routes/User'); //importing the user router   
+app.use('/User', userRouter);
+const authRouter = require('./routes/auth')
+app.use('/auth', authRouter);
 
-app.use('/events', eventRouter); //using the events router for all requests to /events
-
-app.listen(3000)
+app.listen(3000, () => {
+    console.log('Server is running on port 3000'); 
+})
