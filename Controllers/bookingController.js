@@ -1,5 +1,5 @@
-const Booking = require('../Models/booking');
-const Event = require('../Models/event');
+const Booking = require('../Models/bookingModel');
+const Event = require('../Models/EventModel');
 
 const bookingController = {
 

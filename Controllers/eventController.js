@@ -1,7 +1,7 @@
-const eventModel = require('../Models/eventModel');
+const eventModel = require('../Models/EventModel');
 const jwt = require('jsonwebtoken');
 const secretKey = process.env.SECRET_KEY;
-const userModel = require('../Models/userModel');
+const userModel = require('../Models/UserModel');
 const bcrypt = require('bcrypt');
 const { get } = require('mongoose');
 
