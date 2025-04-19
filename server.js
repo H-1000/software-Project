@@ -7,12 +7,6 @@ const cookieParser = require('cookie-parser');
 
 const app = express(); //creating an application
 
-const mongoURI='mongodb+srv://adminHamid:Test123@cluster0.nr1om.mongodb.net/event-booking?retryWrites=true&w=majority&appName=Cluster07'
-
-console.log('hello')
-
-
-
 
 const eventRouter = require('./routes/Events'); //importing the events router
 
@@ -35,23 +29,27 @@ app.use(cookieParser());
 
 app.use(
     cors({
-        origin: 'http://localhost:3000',
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        credentials: true,
+      origin: process.env.ORIGIN,
+      methods: ["GET", "POST", "DELETE", "PUT"],
+      credentials: true,
     })
-)
+  );
 
 
-app.use('/auth', authRouter);
-app.use(authenticationMiddleware); //using the authentication middleware
+app.use('/api/v1', authRouter);
 
-app.use('/events', eventRouter); 
-app.use('/booking', bookingRouter); 
-app.use('/User', userRouter);
+
+app.use('/api/v1/events', eventRouter); 
+app.use('/api/v1/booking', bookingRouter); 
+app.use('/api/v1/users', userRouter);
+
+
+const DB_NAME = process.env.DB_NAME; //MongoDB database name
+const db_url = `${process.env.DB_URL}/${DB_NAME}`;
 
 
 mongoose
-.connect(mongoURI)
+.connect(db_url)
 .then(() => {
     console.log('MongoDB connected!');
 })
@@ -65,7 +63,7 @@ app.use(function (req, res, next) {
  
 
 // Start the server
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
     console.log('Server is running on port 3000'); 
 });
 

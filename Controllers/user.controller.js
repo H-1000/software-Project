@@ -8,7 +8,7 @@ const bcrypt = require("bcrypt");
 const userController = {
   register: async (req, res) => {
     try {
-      const { email, password, name, role, age } = req.body;
+      const { email, password, name, role} = req.body;
 
       // Check if the user already exists
       const existingUser = await userModel.findOne({ email });
@@ -25,7 +25,6 @@ const userController = {
         password: hashedPassword,
         name,
         role,
-        age,
       });
 
       // Save the user to the database
@@ -56,8 +55,11 @@ const userController = {
       }
 
       const currentDateTime = new Date();
-      const expiresAt = new Date(+currentDateTime + 1800000); // expire in 3 minutes
+      const expiresAt = new Date(+currentDateTime + 1800000); // expire in 30 minutes
+      
+      console.log("User Role:", user.role); // Debugging: Check if role exists
       // Generate a JWT token
+
       const token = jwt.sign(
         { user: { userId: user._id, role: user.role } },
         secretKey,
@@ -165,7 +167,7 @@ const userController = {
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-  
+
       res.status(200).json({ message: "User role updated", user });
     } catch (error) {
       console.error("Error updating user role:", error);

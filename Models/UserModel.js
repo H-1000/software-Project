@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { type } = require('os');
+
 
 const userSchema=new mongoose.Schema({
 name :{
@@ -21,8 +21,8 @@ ProfilePic :{
 },
 role :{
     type :String,
-    eunm :['admin','Standard user', 'Organizer'],
-    default : 'Standard user'
+    eunm :['admin','user', 'organizer'],
+    default : 'user'
 },
 createdAt :{
     type: Date,
