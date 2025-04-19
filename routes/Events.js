@@ -5,7 +5,7 @@ const authenticationMiddleware = require('../Middleware/authenticationMiddleware
 const authorizationMiddleware = require('../Middleware/authorizationMiddleware');
 
 
-router.get('/',authorizationMiddleware(['admin','organizer']) ,eventController.getAllEvents); // Get all events
+router.get('/' ,eventController.getAllEvents); // Get all events
 router.get('/my-events', authorizationMiddleware(['admin','organizer']), eventController.getEventsByOrganizer); // Get events created by the authenticated user
 router.get('/:id', eventController.getEventById); // Get event by ID
 

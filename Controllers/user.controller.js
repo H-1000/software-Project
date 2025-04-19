@@ -68,13 +68,12 @@ const userController = {
         }
       );
 
-      return res
-        .cookie("token", token, {
-          expires: expiresAt,
-          httpOnly: true,
-          secure: true, // if not working on thunder client , remove it
-          SameSite: "none",
-        })
+      return res.cookie("token", token, {
+        expires: expiresAt,
+        httpOnly: true,
+        secure: false, // set to false for localhost testing
+        sameSite: "lax", // or "strict"
+      })
         .status(200)
         .json({ message: "login successfully", user });
     } catch (error) {
