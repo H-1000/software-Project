@@ -1,48 +1,68 @@
 const express = require('express');
-require('dotenv').config();
 const mongoose = require('mongoose'); 
-const cookieParser = require('cookie-parser');
-const authenticationMiddleware = require('./Middleware/authenticationMiddleware');
-const authorizationMiddleware = require('./Middleware/authorizationMiddleware');
 
-// Create the express application first
+const cors = require('cors'); 
+const cookieParser = require('cookie-parser');
+
+
 const app = express(); //creating an application
 
-// Middleware setup
-app.use(cookieParser()); // Use cookie parser before anything else
-app.use(authenticationMiddleware); // Use authentication middleware for all routes
+const mongoURI='mongodb+srv://adminHamid:Test123@cluster0.nr1om.mongodb.net/event-booking?retryWrites=true&w=majority&appName=Cluster07'
 
-const mongoURI = 'mongodb+srv://adminHamid:Test123@cluster0.nr1om.mongodb.net/event-booking?retryWrites=true&w=majority&appName=Cluster07';
+console.log('hello')
 
-mongoose.connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log('MongoDB connected!'))
-  .catch(err => console.error('MongoDB connection error:', err));
 
-// Define routes
-app.get('/', (req, res) => {
-    res.send("Hello World!"); // sending response to the client
-});
 
-// Protected route with authorization middleware
-app.use('/someProtectedRoute', authorizationMiddleware(['admin', 'user']), (req, res) => {
-    res.send('Welcome to protected route');
-});
 
-// Import routers and use them
-const eventRouter = require('./routes/Events'); 
+const eventRouter = require('./routes/Events'); //importing the events router
+
+const bookingRouter = require('./routes/booking'); //importing the booking router
+
+const userRouter = require('./routes/User'); //importing the user router   
+
+const authRouter = require('./routes/auth')
+
+
+const authenticationMiddleware =require('./Middleware/authenticationMiddleware')
+
+require('dotenv').config();
+
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: false }));
+
+app.use(cookieParser());
+
+app.use(
+    cors({
+        origin: 'http://localhost:3000',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        credentials: true,
+    })
+)
+
+
+app.use('/auth', authRouter);
+app.use(authenticationMiddleware); //using the authentication middleware
+
 app.use('/events', eventRouter); 
-
-const bookingRouter = require('./routes/booking'); 
-app.use('/booking', bookingRouter);
-
-const userRouter = require('./routes/user');  
+app.use('/booking', bookingRouter); 
 app.use('/User', userRouter);
 
-const authRouter = require('./routes/auth');
-app.use('/auth', authRouter);
+
+mongoose
+.connect(mongoURI)
+.then(() => {
+    console.log('MongoDB connected!');
+})
+.catch(e => {
+    console.error('MongoDB connection error:', e);
+}); 
+
+app.use(function (req, res, next) {
+    return res.status(404).send("404");
+  });
+ 
 
 // Start the server
 app.listen(3000, () => {
