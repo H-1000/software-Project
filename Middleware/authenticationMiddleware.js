@@ -13,13 +13,13 @@ module.exports = function authenticationMiddleware(req, res, next) {
   if (!token) {
     return res.status(405).json({ message: "No token provided" });
   }
-
+console.log(req.User.role)
   jwt.verify(token, secretKey, (error, decoded) => {
     if (error) {
       return res.status(403).json({ message: "Invalid token" });
     }
-
-   
+    console.log("Decoded Token:", decoded);
+    
     req.user = decoded.user;
     next();
   });

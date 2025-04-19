@@ -3,15 +3,16 @@ const userController = require("../Controllers/user.controller")
 const authorizationMiddleware = require('../Middleware/authorizationMiddleware')
 const eventController =require('../Controllers/eventController')
 const bookingController = require('../Controllers/bookingController')
+const authenticationMiddleware = require('../Middleware/authenticationMiddleware')
 const router = express.Router()
 
 
-router.get('/',authorizationMiddleware(['admin']),userController.getAllUsers);//admins can get all users
+router.get('/',authenticationMiddleware,authorizationMiddleware(['admin']),userController.getAllUsers);//admins can get all users
 
-router.get('/profile', authorizationMiddleware(['admin', 'user', 'organizer']), userController.getCurrentUser);
+router.get('/profile', authenticationMiddleware,authorizationMiddleware(['admin', 'user', 'organizer']), userController.getCurrentUser);
 
 //to get a specific user by their id 
-router.get('/:id',authorizationMiddleware(['admin']),userController.getUser);
+router.get('/:id',authenticationMiddleware,authorizationMiddleware(['admin']),userController.getUser);
 
 //to update a user
 router.put('/:id',authorizationMiddleware(['admin']),userController.updateUser);// think abt that again
