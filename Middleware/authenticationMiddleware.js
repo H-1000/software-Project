@@ -1,4 +1,6 @@
-const jwt = require('jsonwebtoken');
+
+const jwt = require("jsonwebtoken");
+
 const secretKey = "1234";
 
 const authenticationMiddleware= (req, res, next) => {

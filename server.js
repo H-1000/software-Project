@@ -10,9 +10,9 @@ const app = express(); //creating an application
 
 const eventRouter = require('./routes/Events'); //importing the events router
 
-const bookingRouter = require('./routes/booking'); //importing the booking router
+const bookingRouter = require('./routes/bookings'); //importing the booking router
 
-const userRouter = require('./routes/User'); //importing the user router   
+const userRouter = require('./routes/user'); //importing the user router   
 
 const authRouter = require('./routes/auth')
 
@@ -40,7 +40,7 @@ app.use('/api/v1', authRouter);
 
 
 app.use('/api/v1/events', eventRouter); 
-app.use('/api/v1/booking', bookingRouter); 
+app.use('/api/v1/bookings', bookingRouter); 
 app.use('/api/v1/users', userRouter);
 
 

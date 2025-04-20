@@ -5,18 +5,17 @@ const authenticationMiddleware = require('../Middleware/authenticationMiddleware
 const authorizationMiddleware = require('../Middleware/authorizationMiddleware');
 
 
-router.get('/' ,eventController.getAllEvents); // Get all events
-router.get('/my-events', authorizationMiddleware(['admin','organizer']), eventController.getEventsByOrganizer); // Get events created by the authenticated user
+router.get('/all' ,authenticationMiddleware,authorizationMiddleware(['admin']),eventController.getAllEvents); // Get all events
+router.get('/',eventController.getAllApprovedEvents); //public can see all approved events
 router.get('/:id', eventController.getEventById); // Get event by ID
 
+router.post('/', authenticationMiddleware,authorizationMiddleware(['organizer']),eventController.createEvent); // Create a new event
 
-router.post('/', authorizationMiddleware(['organizer']),eventController.createEvent); // Create a new event
+router.put('/:id',authenticationMiddleware,authorizationMiddleware(['admin','organizer']) ,eventController.updateEvent);//update the event by user or admin
 
-router.put('/:id',authorizationMiddleware(['admin','organizer']) ,eventController.updateEvent);//update the event by user or admin
+router.delete('/:id',authenticationMiddleware, authorizationMiddleware(['admin','organizer']) ,eventController.deleteEvent); // Delete an event by ID
 
-router.delete('/:id', authorizationMiddleware(['admin','organizer']) ,eventController.deleteEvent); // Delete an event by ID
-
-router.patch('/:id/status', authorizationMiddleware(['admin']) ,eventController.updateEventStatus); // Update event status by admin
+router.patch('/:id/status',authenticationMiddleware, authorizationMiddleware(['admin']) ,eventController.updateEventStatus); // Update event status by admin
 
 
 module.exports=router; 

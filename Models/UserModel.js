@@ -22,7 +22,8 @@ ProfilePic :{
 role :{
     type :String,
     eunm :['admin','user', 'organizer'],
-    default : 'user'
+    default : 'user',
+    required : true
 },
 createdAt :{
     type: Date,
