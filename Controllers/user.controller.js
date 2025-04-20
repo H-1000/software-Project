@@ -183,6 +183,9 @@ const userController = {
     try {
       const { email, newPassword } = req.body;
 
+      if (!email || !newPassword) {
+        return res.status(400).json({ message: "Email and new password are required" });
+    }
       const user = await userModel.findOne({ email });
       if (!user) {
         return res.status(404).json({ message: "User not found" });
