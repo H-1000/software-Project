@@ -128,7 +128,7 @@ const userController = {
       const userId = req.user.userId;
   
       const updates = {};
-      const allowedFields = ["name", "email", "age"];
+      const allowedFields = ["name", "email"];
       allowedFields.forEach(field => {
         if (req.body[field]) updates[field] = req.body[field];
       });
@@ -151,23 +151,28 @@ const userController = {
 
   updateUserRole: async (req, res) => {
     try {
+      const id=req.params.id;
       const { role } = req.body;
+
+      console.log("User ID:", id); // Debugging
+      console.log("New Role:", role); // Debugging
   
-      if (!role || !["admin", "user", "organizer"].includes(role)) {
-        return res.status(400).json({ message: "Invalid or missing role" });
+      const allowedRoles = ["admin", "user", "organizer"];
+      if (!allowedRoles.includes(role)) {
+        return res.status(400).json({ message: "Invalid role" });
       }
-  
-      const user = await userModel.findByIdAndUpdate(
-        req.params.id,
+      console.log("Updating user role in the database..."); // Debugging
+      const updatedUser = await userModel.findByIdAndUpdate(
+        id,
         { role },
-        { new: true }
+        { new: true}
       );
-  
-      if (!user) {
+      if (!updatedUser) {
         return res.status(404).json({ message: "User not found" });
       }
+      console.log("Updated User:", updatedUser); // Debugging
 
-      res.status(200).json({ message: "User role updated", user });
+      res.status(200).json({ message: "User role updated", user: updatedUser });  
     } catch (error) {
       console.error("Error updating user role:", error);
       res.status(500).json({ message: "Server error" });

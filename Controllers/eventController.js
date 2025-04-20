@@ -1,6 +1,7 @@
 const eventModel = require('../Models/EventModel');
 const jwt = require('jsonwebtoken');
-const secretKey = process.env.SECRET_KEY;
+const secretKey = "1234";
+const mongoose = require('mongoose');
 const userModel = require('../Models/UserModel');
 const bcrypt = require('bcrypt');
 const { get } = require('mongoose');
@@ -32,6 +33,8 @@ const eventController = {
     createEvent: async (req, res) => {
         try {
             const user = req.user;
+            console.log("User in createEvent:", req.user);
+
             if (!user || user.role !== 'organizer') {
                 return res.status(403).json({ message: 'Unauthorized' });
             }
@@ -52,7 +55,7 @@ const eventController = {
                 ticketPrice,
                 totalTickets,
                 remainingTickets: totalTickets,
-                organizer: user._id,
+                organizer: new mongoose.Types.ObjectId(user.userId),
                 status: 'pending'
             });
     
@@ -86,7 +89,7 @@ const eventController = {
         const eventId=req.params.id;
         const user =req.user;
 
-        if(!user ||user.role !== 'oraganizer' && user.role !== 'admin'){
+        if(!user ||user.role !== 'organizer' && user.role !== 'admin'){
             return res.status(403).json({message:'Unauthorized'});
         }
 
@@ -107,15 +110,26 @@ const eventController = {
 
     getEventsByOrganizer: async (req, res) => {
         try {
-            const user = req.user;
-            if (!user || user.role !== 'organizer') {
-                return res.status(403).json({ message: 'Unauthorized' });
+            
+            const events = await eventModel.find({ organizer: req.user.userId });
+            
+            if (events.length === 0) {
+                return res.status(404).json({ message: "No events found for this organizer" });
             }
-    
-            const events = await eventModel.find({ organizer: user._id });
+            
+            
             res.status(200).json(events);
         } catch (error) {
             console.error('Error fetching events:', error);
+            res.status(500).json({ message: 'Server error' });
+        }
+    },
+    getAllApprovedEvents: async (req, res) => {
+        try {
+            const events = await eventModel.find({ status: "approved" });
+            res.status(200).json(events);
+        } catch (error) {
+            console.error('Error fetching approved events:', error);
             res.status(500).json({ message: 'Server error' });
         }
     },
@@ -155,12 +169,13 @@ const eventController = {
             res.status(500).json({ message: 'Server error' });
         }
     },
+
     getEventAnalytics: async (req, res) => {
         try {
           const organizerId = req.user.userId;
     
           // Fetch events created by this organizer
-          const events = await Event.find({ organizer: organizerId });
+          const events = await eventModel.find({ organizer: organizerId });
     
           const analytics = events.map(event => {
             const bookedTickets = event.totalTickets - event.remainingTickets;
