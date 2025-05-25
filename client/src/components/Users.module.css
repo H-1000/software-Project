@@ -1,0 +1,488 @@
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: #e040fb;
+  margin: 0;
+  background: linear-gradient(45deg, #9c27b0, #e040fb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.homeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(156, 39, 176, 0.1);
+  color: #9c27b0;
+  border: 1px solid rgba(156, 39, 176, 0.3);
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.homeButton:hover {
+  background: rgba(156, 39, 176, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(156, 39, 176, 0.15);
+}
+
+.homeButton i {
+  font-size: 0.9em;
+}
+
+/* Filters Section */
+.filters {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(156, 39, 176, 0.05);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(156, 39, 176, 0.2);
+}
+
+.searchBar i {
+  color: #e040fb;
+  margin-right: 1rem;
+}
+
+.searchBar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 0.5rem;
+  color: white;
+  font-size: 1rem;
+}
+
+.searchBar input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.searchBar input:focus {
+  outline: none;
+}
+
+.filterAndSort {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.roleFilters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filterButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(156, 39, 176, 0.3);
+  border-radius: 20px;
+  background: rgba(156, 39, 176, 0.1);
+  color: #e040fb;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filterButton:hover {
+  background: rgba(156, 39, 176, 0.2);
+  transform: translateY(-1px);
+}
+
+.filterButton.active {
+  background: linear-gradient(45deg, #9c27b0, #e040fb);
+  color: white;
+  border: none;
+}
+
+.sortButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sortButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(156, 39, 176, 0.3);
+  border-radius: 8px;
+  background: rgba(156, 39, 176, 0.1);
+  color: #e040fb;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sortButton i {
+  font-size: 0.8em;
+  transition: transform 0.2s;
+}
+
+.sortButton:hover {
+  background: rgba(156, 39, 176, 0.2);
+  transform: translateY(-1px);
+}
+
+.sortButton.active {
+  background: linear-gradient(45deg, #9c27b0, #e040fb);
+  color: white;
+  border: none;
+}
+
+/* View Options */
+.viewOptions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.viewButton {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(156, 39, 176, 0.3);
+  border-radius: 8px;
+  background: rgba(156, 39, 176, 0.1);
+  color: #e040fb;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.viewButton:hover {
+  background: rgba(156, 39, 176, 0.2);
+}
+
+.viewButton.active {
+  background: linear-gradient(45deg, #9c27b0, #e040fb);
+  color: white;
+  border: none;
+}
+
+/* Results Count */
+.resultCount {
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+/* Grid and List Views */
+.usersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.usersGrid.listView {
+  grid-template-columns: 1fr;
+}
+
+.usersGrid.listView .userCard {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.usersGrid.listView .userInfo {
+  flex: 1;
+  margin-bottom: 0;
+  margin-right: 2rem;
+}
+
+.userCard {
+  background: rgba(156, 39, 176, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(224, 64, 251, 0.1);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.userCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(156, 39, 176, 0.2);
+  border-color: rgba(224, 64, 251, 0.2);
+}
+
+.userInfo {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.userAvatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(156, 39, 176, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.userAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.userAvatar i {
+  font-size: 1.5rem;
+  color: #9c27b0;
+}
+
+.userDetails {
+  flex: 1;
+}
+
+.userDetails h3 {
+  margin: 0;
+  color: #e040fb;
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.userDetails p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Role Colors */
+.userRole {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.roleAdmin {
+  background: linear-gradient(45deg, #9c27b0, #e040fb);
+  color: white;
+}
+
+.roleOrganizer {
+  background: linear-gradient(45deg, #2196f3, #03a9f4);
+  color: white;
+}
+
+.roleUser {
+  background: linear-gradient(45deg, #4caf50, #8bc34a);
+  color: white;
+}
+
+.userActions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.roleSelect {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(156, 39, 176, 0.3);
+  background: rgba(156, 39, 176, 0.1);
+  color: #e040fb;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.roleSelect:hover {
+  border-color: rgba(156, 39, 176, 0.5);
+}
+
+.deleteButton {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: rgba(244, 67, 54, 0.9);
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.deleteButton:hover {
+  background: #f44336;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+.adminBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(45deg, #9c27b0, #e040fb);
+  color: white;
+  border-radius: 6px;
+  font-weight: 500;
+  width: 100%;
+  justify-content: center;
+}
+
+.adminBadge i {
+  font-size: 1.1em;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(156, 39, 176, 0.3);
+  border-top-color: #e040fb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error {
+  text-align: center;
+  padding: 3rem;
+  color: #f44336;
+  background: rgba(244, 67, 54, 0.1);
+  border-radius: 12px;
+  margin: 1rem;
+}
+
+.error i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.error h2 {
+  margin: 1rem 0;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(156, 39, 176, 0.1);
+  color: #9c27b0;
+  border: 1px solid rgba(156, 39, 176, 0.3);
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 1rem;
+}
+
+.backButton:hover {
+  background: rgba(156, 39, 176, 0.2);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .headerLeft {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .filters {
+    padding: 1rem;
+  }
+
+  .filterAndSort {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .roleFilters,
+  .sortButtons {
+    justify-content: center;
+  }
+
+  .usersGrid {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .userActions {
+    flex-direction: column;
+  }
+
+  .roleSelect,
+  .deleteButton,
+  .adminBadge {
+    width: 100%;
+  }
+
+  .usersGrid.listView .userCard {
+    flex-direction: column;
+  }
+
+  .usersGrid.listView .userInfo {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+} 

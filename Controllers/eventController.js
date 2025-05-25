@@ -10,8 +10,54 @@ const eventController = {
    
     getAllEvents: async (req, res) => {
         try {
-            const events = await eventModel.find({});
-            res.status(200).json(events);
+            console.log('getAllEvents called');
+            console.log('User from request:', req.user);
+
+            if (!req.user || req.user.role !== 'admin') {
+                console.log('Unauthorized access attempt:', req.user);
+                return res.status(403).json({ message: 'Unauthorized: Admin access required' });
+            }
+
+            console.log('Fetching all events from database...');
+            const events = await eventModel.find({})
+                .populate({
+                    path: 'organizer',
+                    select: 'name email profilePicture',
+                    model: userModel
+                });
+            
+            console.log('Found events count:', events.length);
+            console.log('Events with populated organizers:', 
+                events.map(e => ({
+                    id: e._id,
+                    title: e.title,
+                    organizerId: e.organizer?._id,
+                    organizerName: e.organizer?.name
+                }))
+            );
+            
+            // Format events with proper organizer data
+            const formattedEvents = events.map(event => {
+                const plainEvent = event.toObject();
+                console.log('Processing event:', {
+                    id: plainEvent._id,
+                    title: plainEvent.title,
+                    hasOrganizer: !!plainEvent.organizer
+                });
+                return {
+                    ...plainEvent,
+                    organizer: plainEvent.organizer ? {
+                        _id: plainEvent.organizer._id,
+                        name: plainEvent.organizer.name,
+                        email: plainEvent.organizer.email,
+                        profilePicture: plainEvent.organizer.profilePicture
+                    } : null
+                };
+            });
+
+            console.log('Formatted events count:', formattedEvents.length);
+            console.log('Sample formatted event:', formattedEvents[0]);
+            res.status(200).json(formattedEvents);
         } catch (error) {
             console.error('Error fetching events:', error);
             res.status(500).json({ message: 'Server error' });
@@ -20,11 +66,29 @@ const eventController = {
     getEventById: async (req, res) => {
         try {
             const eventId = req.params.id;
-            const event = await eventModel.findById(eventId);
+            const event = await eventModel.findById(eventId)
+                .populate({
+                    path: 'organizer',
+                    select: 'name email profilePicture',
+                    model: userModel
+                });
+
             if (!event) {
                 return res.status(404).json({ message: 'Event not found' });
             }
-            res.status(200).json(event);
+
+            // Format the response to match the frontend expectations
+            const formattedEvent = {
+                ...event.toObject(),
+                organizer: event.organizer ? {
+                    _id: event.organizer._id,
+                    name: event.organizer.name,
+                    email: event.organizer.email,
+                    profilePicture: event.organizer.profilePicture
+                } : null
+            };
+
+            res.status(200).json(formattedEvent);
         } catch (error) {
             console.error('Error fetching event:', error);
             res.status(500).json({ message: 'Server error' });
@@ -60,6 +124,14 @@ const eventController = {
             });
     
             await newEvent.save();
+
+            // Populate the organizer data before sending response
+            await newEvent.populate({
+                path: 'organizer',
+                select: 'name email profilePicture',
+                model: userModel
+            });
+
             res.status(201).json(newEvent);
         } catch (error) {
             console.error('Error creating event:', error);
@@ -69,13 +141,34 @@ const eventController = {
     updateEvent: async (req, res) => {
         try {
             const eventId = req.params.id;
-            const updatedData = req.body;
-    
-            const updatedEvent = await eventModel.findByIdAndUpdate(eventId, updatedData, { new: true });
-            if (!updatedEvent) {
+            const userId = req.user.userId;
+            const userRole = req.user.role;
+
+            // Find the event first
+            const event = await eventModel.findById(eventId);
+            if (!event) {
                 return res.status(404).json({ message: 'Event not found' });
             }
+
+            // Check if user is admin or the event organizer
+            if (userRole !== 'admin' && (userRole !== 'organizer' || event.organizer.toString() !== userId)) {
+                return res.status(403).json({ message: 'Unauthorized: Only the event organizer or admin can update this event' });
+            }
+
+            const updatedData = req.body;
+            
+            // Ensure ticket numbers are properly parsed as integers
+            if (updatedData.totalTickets) {
+                updatedData.totalTickets = parseInt(updatedData.totalTickets);
+            }
+            if (updatedData.remainingTickets) {
+                updatedData.remainingTickets = parseInt(updatedData.remainingTickets);
+            }
+            if (updatedData.ticketPrice) {
+                updatedData.ticketPrice = Number(updatedData.ticketPrice);
+            }
     
+            const updatedEvent = await eventModel.findByIdAndUpdate(eventId, updatedData, { new: true });
             res.status(200).json(updatedEvent);
         } catch (error) {
             console.error('Error updating event:', error);
@@ -83,26 +176,26 @@ const eventController = {
         }
     },    
 
-    deleteEvent : async (req, res) => {
+    deleteEvent: async (req, res) => {
+        try {
+            const eventId = req.params.id;
+            const userId = req.user.userId;
+            const userRole = req.user.role;
 
-        try{
-        const eventId=req.params.id;
-        const user =req.user;
+            // Find the event first
+            const event = await eventModel.findById(eventId);
+            if (!event) {
+                return res.status(404).json({ message: 'Event not found' });
+            }
 
-        if(!user ||user.role !== 'organizer' && user.role !== 'admin'){
-            return res.status(403).json({message:'Unauthorized'});
-        }
+            // Check if user is admin or the event organizer
+            if (userRole !== 'admin' && (userRole !== 'organizer' || event.organizer.toString() !== userId)) {
+                return res.status(403).json({ message: 'Unauthorized: Only the event organizer or admin can delete this event' });
+            }
 
-        //to find and delete the event
-
-        const event = await eventModel.findByIdAndDelete(eventId);
-        
-        if(!event){//if not found
-            return res.status(404).json({message:'Event not found'});
-        }
-        return res.status(200).json({message:'Event deleted successfully'})
-
-        }catch (error) {
+            await eventModel.findByIdAndDelete(eventId);
+            return res.status(200).json({ message: 'Event deleted successfully' });
+        } catch (error) {
             console.error('Error deleting event:', error);
             res.status(500).json({ message: 'Server error' });
         }
@@ -110,15 +203,44 @@ const eventController = {
 
     getEventsByOrganizer: async (req, res) => {
         try {
+            console.log('Getting events for organizer. User:', req.user);
             
-            const events = await eventModel.find({ organizer: req.user.userId });
-            
-            if (events.length === 0) {
-                return res.status(404).json({ message: "No events found for this organizer" });
+            if (!req.user || !req.user.userId) {
+                console.log('No user ID found in request');
+                return res.status(403).json({ message: 'No user ID found' });
+            }
+
+            if (req.user.role !== 'organizer') {
+                console.log('User is not an organizer:', req.user.role);
+                return res.status(403).json({ message: 'User is not an organizer' });
             }
             
+            console.log('Finding events for organizer:', req.user.userId);
+            const events = await eventModel.find({ organizer: req.user.userId })
+                .populate({
+                    path: 'organizer',
+                    select: 'name email profilePicture',
+                    model: userModel
+                });
             
-            res.status(200).json(events);
+            console.log('Found events:', events.length);
+            
+            // Even if no events, return an empty array instead of 404
+            const formattedEvents = events.map(event => {
+                const plainEvent = event.toObject();
+                return {
+                    ...plainEvent,
+                    organizer: plainEvent.organizer ? {
+                        _id: plainEvent.organizer._id,
+                        name: plainEvent.organizer.name,
+                        email: plainEvent.organizer.email,
+                        profilePicture: plainEvent.organizer.profilePicture
+                    } : null
+                };
+            });
+            
+            console.log('Formatted events:', formattedEvents.length);
+            res.status(200).json(formattedEvents);
         } catch (error) {
             console.error('Error fetching events:', error);
             res.status(500).json({ message: 'Server error' });
@@ -126,8 +248,28 @@ const eventController = {
     },
     getAllApprovedEvents: async (req, res) => {
         try {
-            const events = await eventModel.find({ status: "approved" });
-            res.status(200).json(events);
+            const events = await eventModel.find({ status: "approved" })
+                .populate({
+                    path: 'organizer',
+                    select: 'name email profilePicture',
+                    model: userModel
+                });
+
+            // Format events with proper organizer data
+            const formattedEvents = events.map(event => {
+                const plainEvent = event.toObject();
+                return {
+                    ...plainEvent,
+                    organizer: plainEvent.organizer ? {
+                        _id: plainEvent.organizer._id,
+                        name: plainEvent.organizer.name,
+                        email: plainEvent.organizer.email,
+                        profilePicture: plainEvent.organizer.profilePicture
+                    } : null
+                };
+            });
+
+            res.status(200).json(formattedEvents);
         } catch (error) {
             console.error('Error fetching approved events:', error);
             res.status(500).json({ message: 'Server error' });

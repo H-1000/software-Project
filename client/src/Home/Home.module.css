@@ -1,0 +1,528 @@
+.pageWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  min-height: 100vh;
+}
+
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #f5f5f5;
+}
+
+.homeContainer h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.authButton {
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  background-color: #007bff;
+  color: white;
+}
+
+.authButton:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.sidebar {
+  width: 250px;
+  background: linear-gradient(135deg, hsla(273, 75%, 32%, 1), hsla(311, 91%, 40%, 1));
+  color: white;
+  position: fixed;
+  height: 100vh;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, width 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarClosed {
+  transform: translateX(-250px);
+}
+
+.sidebarContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sidebarTop {
+  flex-grow: 1;
+}
+
+.sidebarHeader {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  transition: transform 0.3s ease;
+  margin-left: 1rem;
+}
+
+.closeButton:hover {
+  transform: scale(1.1);
+}
+
+.userProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.profilePicture {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.profilePicture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profilePicture i {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.userInfo {
+  text-align: center;
+}
+
+.userInfo h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+}
+
+.userInfo p {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  word-break: break-all;
+}
+
+.sidebarBottom {
+  padding: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logoutButton {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logoutButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.logoutButton i {
+  font-size: 1.1rem;
+}
+
+.toggleButton {
+  position: fixed;
+  left: 250px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, hsla(273, 75%, 32%, 1), hsla(311, 91%, 40%, 1));
+  color: white;
+  border: none;
+  width: 25px;
+  height: 50px;
+  border-radius: 0 25px 25px 0;
+  cursor: pointer;
+  z-index: 1000;
+  transition: left 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.toggleButton:hover {
+  width: 30px;
+}
+
+.toggleButtonShifted {
+  left: 0;
+}
+
+.sidebarNav {
+  padding-top: 0.5rem;
+}
+
+.sidebarLink {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  gap: 0.75rem;
+}
+
+.sidebarLink:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.sidebarLink i {
+  width: 20px;
+  text-align: center;
+}
+
+.linkText {
+  white-space: nowrap;
+}
+
+.mainContent {
+  flex: 1;
+  margin-left: 250px;
+  padding: 2rem;
+  transition: margin-left 0.3s ease;
+}
+
+.mainContentExpanded {
+  margin-left: 0;
+}
+
+.heroSection {
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, hsla(273, 75%, 32%, 1), hsla(311, 91%, 40%, 1));
+  border-radius: 0 0 50px 50px;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%23FFFFFF" fill-opacity="0.05" d="M45.4,-77.8C58.9,-69.3,69.7,-55.9,77.4,-41.3C85.1,-26.7,89.7,-11,89.8,4.8C89.9,20.7,85.5,36.6,76.6,49.8C67.7,63,54.3,73.5,39.5,78.5C24.7,83.6,8.4,83.2,-7.1,80.1C-22.7,77,-37.5,71.2,-49.8,62.1C-62.1,53,-71.8,40.6,-77.8,26.5C-83.8,12.4,-86,-3.4,-83.1,-18.1C-80.2,-32.9,-72.2,-46.6,-60.5,-55.6C-48.8,-64.6,-33.5,-68.8,-19.1,-77.5C-4.7,-86.2,8.8,-99.3,23.8,-97.9C38.8,-96.5,55.3,-80.6,45.4,-77.8Z" transform="translate(100 100)"/></svg>') no-repeat center center;
+  background-size: 80%;
+  opacity: 0.1;
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+
+.heroContent h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.heroContent p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.searchSection {
+  max-width: 800px;
+  margin: 3rem auto 0;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.searchBar i {
+  color: #666;
+  margin-right: 1rem;
+}
+
+.searchBar input {
+  flex: 1;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  outline: none;
+}
+
+.searchButton {
+  background: linear-gradient(45deg, hsla(273, 75%, 32%, 1), hsla(311, 91%, 40%, 1));
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: transform 0.2s;
+}
+
+.searchButton:hover {
+  transform: translateY(-2px);
+}
+
+.quickFilters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.filterButton {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filterButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.filterButton.active {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.ctaButton, .ctaButtonOutline {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.ctaButton {
+  background: white;
+  color: hsla(273, 75%, 32%, 1);
+}
+
+.ctaButtonOutline {
+  border: 2px solid white;
+  color: white;
+}
+
+.ctaButton:hover, .ctaButtonOutline:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.eventsSection {
+  padding: 2rem;
+  min-height: 400px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.sectionHeader h2 {
+  font-size: 2rem;
+  color: white;
+  position: relative;
+}
+
+.viewOptions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.viewButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.viewButton.active {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.eventsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.eventsGrid.listView {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.eventsGrid.listView > div {
+  max-width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.eventsGrid.listView .imageContainer {
+  width: 200px;
+  min-width: 200px;
+  height: 150px;
+}
+
+.eventsGrid.listView .content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 150px;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem;
+  color: white;
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.noEvents {
+  text-align: center;
+  padding: 3rem;
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.noEvents i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .eventsGrid.listView > div {
+    flex-direction: column;
+  }
+
+  .eventsGrid.listView .imageContainer {
+    width: 100%;
+    height: 200px;
+  }
+
+  .eventsGrid.listView .details {
+    height: auto;
+  }
+} 

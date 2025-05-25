@@ -1,0 +1,25 @@
+.nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: #9c27b0;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.navLink:hover {
+  background: rgba(156, 39, 176, 0.1);
+  transform: translateY(-2px);
+}
+
+.navLink i {
+  font-size: 1.1em;
+} 

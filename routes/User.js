@@ -5,32 +5,32 @@ const eventController =require('../Controllers/eventController')
 const bookingController = require('../Controllers/bookingController')
 const authenticationMiddleware = require('../Middleware/authenticationMiddleware')
 const router = express.Router()
+const upload = require('../Middleware/uploadMiddleware');
 
+// Auth routes
+router.post("/register", userController.register);
+router.post("/login", userController.login);
+router.post("/logout", userController.logout);
 
-router.get('/',authenticationMiddleware,authorizationMiddleware(['admin']),userController.getAllUsers);//admins can get all users
+// Profile routes
+router.get('/profile', authenticationMiddleware, authorizationMiddleware(['admin', 'user', 'organizer']), userController.getCurrentUser);
+router.put('/profile', authenticationMiddleware, authorizationMiddleware(['admin', 'user', 'organizer']), userController.updateCurrentUserProfile);
+router.post('/profile/picture', authenticationMiddleware, authorizationMiddleware(['admin', 'user', 'organizer']), upload.single('profilePicture'), userController.updateProfilePicture);
+router.delete('/profile/picture', authenticationMiddleware, authorizationMiddleware(['admin', 'user', 'organizer']), userController.deleteProfilePicture);
 
-router.get('/profile', authenticationMiddleware,authorizationMiddleware(['admin', 'user', 'organizer']), userController.getCurrentUser);
+// Event routes
+router.get('/events', authenticationMiddleware, authorizationMiddleware(['organizer']), eventController.getEventsByOrganizer);
+router.get('/events/analytics', authenticationMiddleware, authorizationMiddleware(['organizer']), eventController.getEventAnalytics);
+router.get('/check-organizer/:eventId', authenticationMiddleware, userController.checkEventOrganizer);
 
+// Admin routes
+router.get('/', authenticationMiddleware, authorizationMiddleware(['admin']), userController.getAllUsers);
+router.route('/:id')
+  .get(authenticationMiddleware, authorizationMiddleware(['admin']), userController.getUser)
+  .put(authenticationMiddleware, authorizationMiddleware(['admin']), userController.updateUserRole)
+  .delete(authenticationMiddleware, authorizationMiddleware(['admin']), userController.deleteUser);
 
-router.put('/profile', authenticationMiddleware,authorizationMiddleware(['admin', 'user', 'organizer']), userController.updateCurrentUserProfile);
+// Parameterized routes should come last
+router.get('/:id/events', authenticationMiddleware, authorizationMiddleware(['admin', 'organizer']), eventController.getEventsByOrganizer);
 
-// act as if the booking is ready //
-router.get('/bookings', authenticationMiddleware,authorizationMiddleware(['user']), bookingController.getUserBookings);
-
-
-router.get('/events', authenticationMiddleware,authorizationMiddleware(['organizer']), eventController.getEventsByOrganizer);
-
-router.get('/events/analytics', authenticationMiddleware,authorizationMiddleware(['organizer']), eventController.getEventAnalytics);
-
-router.get('/:id/events',authenticationMiddleware,authorizationMiddleware(['admin','organizer']),eventController.getEventsByOrganizer);
-
-router.put('/:id',authenticationMiddleware,authorizationMiddleware(['admin']),userController.updateUserRole);//admins can update the user role
-
-router.get('/:id',authenticationMiddleware,authorizationMiddleware(['admin']),userController.getUser);
-
-//to update a user
-router.put('/:id',authenticationMiddleware,authorizationMiddleware(['admin','user','organizer']),userController.updateUser);// think abt that again
-
-router.delete('/:id',authenticationMiddleware,authorizationMiddleware(['admin']),userController.deleteUser);//admins can delete any user
-
-module.exports =router
+module.exports = router

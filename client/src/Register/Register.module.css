@@ -1,0 +1,96 @@
+.registerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    background: linear-gradient(135deg, hsla(273, 75%, 32%, 0.9), hsla(311, 91%, 40%, 0.8));
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    width: 350px;
+    min-height: 300px;
+    font-family: Arial, sans-serif;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.registerContainer h1 {
+    color: white;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.name, .email, .password, .confirmPassword, .role {
+    width: 85%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.name:focus, .email:focus, .password:focus, .confirmPassword:focus, .role:focus {
+    outline: none;
+    border-color: hsla(311, 91%, 40%, 0.8);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.registerButton {
+    width: 40%;
+    padding: 12px;
+    background-color: hsl(311, 91%, 40%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.registerButton:hover {
+    background-color: hsl(311, 95%, 35%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.registerButton:active {
+    transform: translateY(0);
+}
+
+.registerContainer form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginText {
+    margin-top: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+}
+
+.loginLink {
+    color: hsl(311, 91%, 70%);
+    text-decoration: none;
+    margin-left: 5px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.loginLink:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+
+
