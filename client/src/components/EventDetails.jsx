@@ -96,7 +96,14 @@ const EventDetails = () => {
       });
       return;
     }
-    // Add registration logic here
+
+    // Only allow standard users to register
+    if (user.role !== 'user') {
+      setError('Only standard users can register for events.');
+      return;
+    }
+
+    navigate(`/events/${eventId}/book`);
   };
 
   if (loading) {
@@ -238,21 +245,36 @@ const EventDetails = () => {
           )}
 
           <div className={styles.actions}>
-            <button 
-              onClick={handleRegister}
-              className={styles.registerButton}
-              disabled={event.remainingTickets === 0}
-            >
-              {event.remainingTickets === 0 ? 'Sold Out' : 'Register for Event'}
-              <i className="fas fa-arrow-right"></i>
-            </button>
-            <button 
-              className={styles.shareButton}
-              onClick={handleShare}
-            >
-              <i className="fas fa-share-alt"></i>
-              Share Event
-            </button>
+            {event.status === 'approved' && (
+              <>
+                <button 
+                  onClick={handleRegister}
+                  className={styles.registerButton}
+                  disabled={event.remainingTickets === 0 || user?.role === 'admin' || user?.role === 'organizer'}
+                >
+                  {event.remainingTickets === 0 ? 'Sold Out' : 
+                   user?.role === 'admin' ? 'Admins Cannot Register' :
+                   user?.role === 'organizer' ? 'Organizers Cannot Register' :
+                   'Register for Event'}
+                  <i className="fas fa-arrow-right"></i>
+                </button>
+                <button 
+                  className={styles.shareButton}
+                  onClick={handleShare}
+                >
+                  <i className="fas fa-share-alt"></i>
+                  Share Event
+                </button>
+              </>
+            )}
+            {event.status !== 'approved' && user && (user.role === 'admin' || (user.role === 'organizer' && user._id === event.organizer?._id)) && (
+              <div className={styles.statusBadge}>
+                <i className={`fas ${
+                  event.status === 'pending' ? 'fa-clock' : 'fa-times-circle'
+                }`}></i>
+                Event {event.status === 'pending' ? 'Pending Approval' : 'Rejected'}
+              </div>
+            )}
           </div>
         </div>
       </div>

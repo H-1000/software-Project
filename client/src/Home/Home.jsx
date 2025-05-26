@@ -196,6 +196,12 @@ function Home() {
                       <i className="fas fa-user-edit"></i>
                       <span className={styles.linkText}>Edit Profile</span>
                     </Link>
+                    {user.role === 'user' && (
+                      <Link to="/bookings" className={styles.sidebarLink}>
+                        <i className="fas fa-ticket-alt"></i>
+                        <span className={styles.linkText}>My Bookings</span>
+                      </Link>
+                    )}
                     {user.role === 'organizer' && (
                       <Link to="/my-events" className={styles.sidebarLink}>
                         <i className="fas fa-calendar-alt"></i>
