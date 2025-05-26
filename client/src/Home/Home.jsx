@@ -149,13 +149,13 @@ function Home() {
     <div className={styles.pageWrapper}>
       <div className={styles.container}>
         <button 
-          className={`${styles.toggleButton} ${!isSidebarOpen ? styles.toggleButtonShifted : ''}`} 
+          className={${styles.toggleButton} ${!isSidebarOpen ? styles.toggleButtonShifted : ''}} 
           onClick={toggleSidebar}
         >
-          <i className={`fas ${isSidebarOpen ? 'fa-chevron-left' : 'fa-chevron-right'}`}></i>
+          <i className={fas ${isSidebarOpen ? 'fa-chevron-left' : 'fa-chevron-right'}}></i>
         </button>
 
-        <aside className={`${styles.sidebar} ${!isSidebarOpen ? styles.sidebarClosed : ''}`}>
+        <aside className={${styles.sidebar} ${!isSidebarOpen ? styles.sidebarClosed : ''}}>
           <div className={styles.sidebarContent}>
             <div className={styles.sidebarTop}>
               <div className={styles.sidebarHeader}>
@@ -247,7 +247,7 @@ function Home() {
           </div>
         </aside>
         
-        <main className={`${styles.mainContent} ${!isSidebarOpen ? styles.mainContentExpanded : ''}`}>
+        <main className={${styles.mainContent} ${!isSidebarOpen ? styles.mainContentExpanded : ''}}>
           <div className={styles.heroSection}>
             <div className={styles.heroContent}>
               <h1>Discover Amazing Events</h1>
@@ -285,25 +285,25 @@ function Home() {
               </form>
               <div className={styles.quickFilters}>
                 <button 
-                  className={`${styles.filterButton} ${selectedTimeFilter === 'all' ? styles.active : ''}`}
+                  className={${styles.filterButton} ${selectedTimeFilter === 'all' ? styles.active : ''}}
                   onClick={() => handleTimeFilterClick('all')}
                 >
                   All Events
                 </button>
                 <button 
-                  className={`${styles.filterButton} ${selectedTimeFilter === 'today' ? styles.active : ''}`}
+                  className={${styles.filterButton} ${selectedTimeFilter === 'today' ? styles.active : ''}}
                   onClick={() => handleTimeFilterClick('today')}
                 >
                   Today
                 </button>
                 <button 
-                  className={`${styles.filterButton} ${selectedTimeFilter === 'week' ? styles.active : ''}`}
+                  className={${styles.filterButton} ${selectedTimeFilter === 'week' ? styles.active : ''}}
                   onClick={() => handleTimeFilterClick('week')}
                 >
                   This Week
                 </button>
                 <button 
-                  className={`${styles.filterButton} ${selectedTimeFilter === 'month' ? styles.active : ''}`}
+                  className={${styles.filterButton} ${selectedTimeFilter === 'month' ? styles.active : ''}}
                   onClick={() => handleTimeFilterClick('month')}
                 >
                   This Month
@@ -319,20 +319,20 @@ function Home() {
                   <h2>My Events</h2>
                   <div className={styles.viewOptions}>
                     <button 
-                      className={`${styles.viewButton} ${myEventsViewMode === 'grid' ? styles.active : ''}`}
+                      className={${styles.viewButton} ${myEventsViewMode === 'grid' ? styles.active : ''}}
                       onClick={() => setMyEventsViewMode('grid')}
                     >
                       <i className="fas fa-th-large"></i>
                     </button>
                     <button 
-                      className={`${styles.viewButton} ${myEventsViewMode === 'list' ? styles.active : ''}`}
+                      className={${styles.viewButton} ${myEventsViewMode === 'list' ? styles.active : ''}}
                       onClick={() => setMyEventsViewMode('list')}
                     >
                       <i className="fas fa-list"></i>
                     </button>
                   </div>
                 </div>
-                <div className={`${styles.eventsGrid} ${myEventsViewMode === 'list' ? styles.listView : ''}`}>
+                <div className={${styles.eventsGrid} ${myEventsViewMode === 'list' ? styles.listView : ''}}>
                   {events
                     .filter(event => event.organizer?._id === user._id || event.organizer === user._id)
                     .map(event => (
@@ -345,13 +345,13 @@ function Home() {
               <h2>Featured Events</h2>
               <div className={styles.viewOptions}>
                 <button 
-                  className={`${styles.viewButton} ${viewMode === 'grid' ? styles.active : ''}`}
+                  className={${styles.viewButton} ${viewMode === 'grid' ? styles.active : ''}}
                   onClick={() => setViewMode('grid')}
                 >
                   <i className="fas fa-th-large"></i>
                 </button>
                 <button 
-                  className={`${styles.viewButton} ${viewMode === 'list' ? styles.active : ''}`}
+                  className={${styles.viewButton} ${viewMode === 'list' ? styles.active : ''}}
                   onClick={() => setViewMode('list')}
                 >
                   <i className="fas fa-list"></i>
@@ -364,7 +364,7 @@ function Home() {
                 <span>Loading amazing events...</span>
               </div>
             ) : filteredEvents.length > 0 ? (
-              <div className={`${styles.eventsGrid} ${viewMode === 'list' ? styles.listView : ''}`}>
+              <div className={${styles.eventsGrid} ${viewMode === 'list' ? styles.listView : ''}}>
                 {filteredEvents.map(event => (
                   <EventCard key={event._id} event={event} viewMode={viewMode} currentUser={user} />
                 ))}
