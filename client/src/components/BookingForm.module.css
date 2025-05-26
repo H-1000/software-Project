@@ -1,0 +1,341 @@
+.container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, hsla(273, 75%, 32%, 1), hsla(311, 91%, 40%, 1));
+  color: white;
+}
+
+.formWrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.formWrapper h1 {
+  color: white;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.eventSummary {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.eventSummary h2 {
+  color: white;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.eventSummary p {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.eventSummary i {
+  color: #e040fb;
+  width: 20px;
+}
+
+.ticketInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.price {
+  font-weight: bold;
+  color: white !important;
+  background: linear-gradient(45deg, #9c27b0, #e040fb);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price i {
+  color: white;
+}
+
+.remainingTickets {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.remainingTickets.lowStock {
+  color: #ff4444 !important;
+}
+
+.remainingTickets.lowStock i {
+  color: #ff4444;
+}
+
+.maxTickets {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-left: 0.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formGroup label {
+  font-weight: 500;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.formGroup input,
+.formGroup textarea {
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  font-size: 1rem;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: #e040fb;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.formGroup input:disabled {
+  background: rgba(255, 255, 255, 0.05);
+  cursor: not-allowed;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.totalPrice {
+  background: linear-gradient(45deg, rgba(156, 39, 176, 0.3), rgba(224, 64, 251, 0.3));
+  padding: 1.25rem;
+  border-radius: 12px;
+  text-align: right;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 1rem;
+  backdrop-filter: blur(5px);
+}
+
+.totalPrice h3 {
+  color: white;
+  margin: 0;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.totalPrice h3::before {
+  content: '💜';
+  font-size: 1.2rem;
+}
+
+.formActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.backButton,
+.submitButton {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.backButton {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.backButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.submitButton {
+  background: linear-gradient(45deg, #9c27b0, #e040fb);
+  color: white;
+  margin-left: auto;
+}
+
+.submitButton:hover:not(:disabled) {
+  background: linear-gradient(45deg, #7b1fa2, #e040fb);
+}
+
+.submitButton:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: white;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-left-color: #e040fb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error {
+  color: #ff4444;
+}
+
+.error i {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .formWrapper {
+    padding: 1.5rem;
+  }
+  
+  .formActions {
+    flex-direction: column;
+  }
+  
+  .submitButton {
+    margin-left: 0;
+  }
+  
+  .ticketInfo {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+}
+
+/* Style number input arrows/spinners */
+.formGroup input[type="number"] {
+  position: relative;
+  padding-right: 3rem;
+  -moz-appearance: textfield;
+}
+
+.formGroup input[type="number"]::-webkit-inner-spin-button,
+.formGroup input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+  height: calc(100% - 2px);
+  margin: 1px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2.5rem;
+  border-left: 1px solid rgba(224, 64, 251, 0.3);
+  background: rgba(156, 39, 176, 0.2);
+  backdrop-filter: blur(5px);
+  cursor: pointer;
+  border-top-right-radius: 11px;
+  border-bottom-right-radius: 11px;
+  transition: all 0.3s ease;
+}
+
+.formGroup input[type="number"]:hover::-webkit-inner-spin-button,
+.formGroup input[type="number"]:hover::-webkit-outer-spin-button {
+  background: rgba(156, 39, 176, 0.3);
+  border-left: 1px solid rgba(224, 64, 251, 0.4);
+}
+
+.formGroup input[type="number"]:focus::-webkit-inner-spin-button,
+.formGroup input[type="number"]:focus::-webkit-outer-spin-button {
+  background: rgba(156, 39, 176, 0.4);
+  border-left: 1px solid rgba(224, 64, 251, 0.5);
+}
+
+/* Make special requirements textarea non-resizable */
+.formGroup textarea {
+  resize: none;
+}
+
+.success {
+  text-align: center;
+  padding: 2rem;
+  color: white;
+  background: rgba(46, 125, 50, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(129, 199, 132, 0.3);
+  margin-bottom: 1rem;
+}
+
+.success i {
+  font-size: 2.5rem;
+  color: #81c784;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.success h2 {
+  color: #81c784;
+  margin-bottom: 0.5rem;
+}
+
+.success p {
+  color: rgba(255, 255, 255, 0.9);
+}
