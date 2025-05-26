@@ -14,6 +14,8 @@ import MyEvents from './components/MyEvents';
 import Events from './components/Events';
 import Users from './components/Users';
 import EventAnalytics from './components/EventAnalytics';
+import BookingForm from './components/BookingForm';
+import MyBookings from './components/MyBookings';
 
 const router = createBrowserRouter([
   {
@@ -26,12 +28,20 @@ const router = createBrowserRouter([
       { path: 'forgot-password', element: <ForgotPassword /> },
       { path: 'events/:eventId', element: <EventDetails /> },
       {
+        path: 'events/:eventId/book',
+        element: <ProtectedRoute><BookingForm /></ProtectedRoute>
+      },
+      {
         path: 'profile',
         element: <ProtectedRoute><Profile /></ProtectedRoute>
       },
       {
         path: 'profile/edit',
         element: <ProtectedRoute><EditProfile /></ProtectedRoute>
+      },
+      {
+        path: 'bookings',
+        element: <ProtectedRoute><MyBookings /></ProtectedRoute>
       },
       {
         path: 'my-events',
