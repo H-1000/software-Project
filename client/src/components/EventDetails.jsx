@@ -19,7 +19,7 @@ const EventDetails = () => {
         setError(null);
 
         // Fetch event details first
-        const eventResponse = await axios.get(/events/${eventId});
+        const eventResponse = await axios.get(`/events/${eventId}`);
         const eventData = eventResponse.data;
         setEvent(eventData);
 
@@ -53,7 +53,7 @@ const EventDetails = () => {
       navigate('/login', { 
         state: { 
           message: 'Please log in to delete events',
-          from: /events/${eventId}
+          from: `/events/${eventId}`
         } 
       });
       return;
@@ -64,7 +64,7 @@ const EventDetails = () => {
     }
 
     try {
-      await axios.delete(/events/${eventId});
+      await axios.delete(`/events/${eventId}`);
       navigate('/');
     } catch (error) {
       console.error('Error deleting event:', error);
